@@ -138,10 +138,10 @@
     <ClInclude Include="src\main.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Words.txt" />
+    <Image Include="res\icon\niko.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\icon\niko.jpg" />
+    <Text Include="res\words\words.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

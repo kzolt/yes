@@ -31,11 +31,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\Words.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="res\icon\niko.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\words\words.txt" />
   </ItemGroup>
 </Project>

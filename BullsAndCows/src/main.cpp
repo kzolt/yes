@@ -5,11 +5,10 @@
 #include "main.h"
 
 // Made the game initialization on the heap cause it made sense at the time, rather than just making it a variable with a global scope
-Logic* game = new Logic(std::string("sloan")); 
+Logic* game = new Logic(); 
 
 void printIntro()
 {
-
 	std::cout << "Welcome to Bulls and Cows, a fun word game!" << std::endl;
 	std::cout << "         }   {         ___ " << std::endl;
 	std::cout << "         (o o)        (o o) " << std::endl;
@@ -61,6 +60,8 @@ GuessStatus validateGuess(std::string& guess)
 	case GuessStatus::NOT_LOWERCASE:
 		std::cout << "\nThe word has to be lowercase\n" << std::endl;
 		return status;
+	case GuessStatus::REQUEST_HIDDEN_WORD:
+		std::cout << "\nThe hidden word is " << game->getHiddenWord() << "\n" << std::endl;
 	default:
 		return status;
 	}
@@ -69,22 +70,26 @@ GuessStatus validateGuess(std::string& guess)
 // plays the game to completion
 void playGame()
 {
-	game->reset();
-
 	ValidGuess guess;
 
 	while (!game->isGameWon() && game->getCurrentTry() <= game->getMaxTries())
 	{
 		guess = takeGuess();
 
-		if (guess.m_Status == GuessStatus::OK)
+		if (guess.m_Status == GuessStatus::OK || guess.m_Status == GuessStatus::REQUEST_HIDDEN_WORD)
 		{
 			BullCowCount bullCowCount = game->sumbitGuess(guess.m_Guess);
 			std::cout << " Bulls = " << bullCowCount.m_Bulls << "\n Cows  = " << bullCowCount.m_Cows << std::endl;
+
+			if (guess.m_Status == GuessStatus::REQUEST_HIDDEN_WORD)
+			{
+				game->setCurretyTry();
+			}
 		}
 	}
 
 	printGameSummary();
+	game->reset();
 }
 
 // pretty self explanitory
@@ -92,7 +97,7 @@ bool askToPlayAgain()
 {
 	char userInput[1];
 
-	std::cout << "Would you like to play again with the same hidden word? y\\n" << std::endl;
+	std::cout << "Would you like to play again with a different hidden word? y\\n" << std::endl;
 	std::cin >> userInput[0];
 
 	if (userInput[0] == 'n' || userInput[0] == 'N')

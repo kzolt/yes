@@ -1,3 +1,6 @@
+#include <iostream>
+#include <random>
+#include <fstream>
 #include <string>
 #include <map>
 
@@ -5,8 +8,8 @@
 
 // Constructors
 
-Logic::Logic(std::string hiddenWord)
-	: m_hiddenWord(hiddenWord), m_currentTry(1), m_gameWon(false) { }
+Logic::Logic()
+	: m_hiddenWord(getRandomWord()), m_currentTry(1), m_gameWon(false) { }
 
 // Getters
 
@@ -19,16 +22,29 @@ int Logic::getMaxTries() const
 int Logic::getCurrentTry() const { return m_currentTry; }
 bool Logic::isGameWon() const { return m_gameWon; }
 
+int Logic::getHiddenWordLength() const { return m_hiddenWord.length(); }
+std::string Logic::getHiddenWord() const { return m_hiddenWord; }
+
+// Setters
+
+void Logic::setCurretyTry() { m_currentTry = (getMaxTries() - 1); }
+
 // Public Methods
 
 void Logic::reset()
 {
 	m_currentTry = 1;
 	m_gameWon = false;
+	m_hiddenWord = getRandomWord();
 }
 
 GuessStatus Logic::checkGuessValidity(std::string& guess) const
 {
+	if (guess == std::string("hiddenword"))
+	{
+		return GuessStatus::REQUEST_HIDDEN_WORD;
+	}
+
 	if (!isIsogram(guess))
 	{
 		return GuessStatus::NOT_ISOGRAM;
@@ -45,11 +61,6 @@ GuessStatus Logic::checkGuessValidity(std::string& guess) const
 	}
 
 	return GuessStatus::OK;
-}
-
-int Logic::getHiddenWordLength() const
-{
-	return m_hiddenWord.length();
 }
 
 BullCowCount Logic::sumbitGuess(std::string& guess)
@@ -117,4 +128,29 @@ bool Logic::isLowercase(std::string& guess) const
 	}
 
 	return true;
+}
+
+std::string getRandomWord()
+{
+	int currentLine = 1;
+
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_int_distribution<int> dist(1, 21);
+	int randomNumber = dist(mt);
+
+	std::ifstream file("res/words/words.txt");
+	std::string line;
+
+	while (std::getline(file, line))
+	{
+		if (currentLine == randomNumber)
+		{
+			return line;
+		}
+
+		++currentLine;
+	}
+
+	return line;
 }

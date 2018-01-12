@@ -11,7 +11,7 @@ struct BullCowCount
 
 enum class GuessStatus
 {
-	OK, NOT_ISOGRAM, NOT_LOWERCASE, WRONG_LENGTH
+	OK, NOT_ISOGRAM, NOT_LOWERCASE, WRONG_LENGTH, REQUEST_HIDDEN_WORD
 };
 
 // struct used by takeGuess() back in main translation unit to store values (don't ask why it's here)
@@ -28,6 +28,9 @@ public:
 	int getMaxTries() const;
 	int getCurrentTry() const;
 	int getHiddenWordLength() const;
+	std::string getHiddenWord() const;
+
+	void setCurretyTry();
 
 	bool isGameWon() const;
 	GuessStatus checkGuessValidity(std::string& guess) const;
@@ -36,7 +39,7 @@ public:
 	
 	BullCowCount sumbitGuess(std::string& guess);
 
-	Logic(std::string hiddenWord);
+	Logic();
 
 private:
 	int m_currentTry;
@@ -45,5 +48,7 @@ private:
 	bool m_gameWon;
 
 	bool isIsogram(std::string& guess) const;
-	bool isLowercase(std::string& guess) const;
+	bool isLowercase(std::string& guess) const; 
 };
+
+std::string getRandomWord();
