@@ -83,9 +83,14 @@ void playGame()
 
 			if (guess.m_Status == GuessStatus::REQUEST_HIDDEN_WORD)
 			{
-				game->setCurretyTry();
+				game->setCurretyTryHiddenWordCheat();
 			}
 		}
+	}
+
+	if (!game->isGameWon() && (game->getCurrentTry() - 1) == game->getMaxTries())
+	{
+		std::cout << "\nThe hidden word was: " << game->getHiddenWord() << std::endl;
 	}
 
 	printGameSummary();

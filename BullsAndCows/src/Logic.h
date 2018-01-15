@@ -30,7 +30,7 @@ public:
 	int getHiddenWordLength() const;
 	std::string getHiddenWord() const;
 
-	void setCurretyTry();
+	void setCurretyTryHiddenWordCheat();
 
 	bool isGameWon() const;
 	GuessStatus checkGuessValidity(std::string& guess) const;

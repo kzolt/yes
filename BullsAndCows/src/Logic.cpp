@@ -27,7 +27,7 @@ std::string Logic::getHiddenWord() const { return m_hiddenWord; }
 
 // Setters
 
-void Logic::setCurretyTry() { m_currentTry = (getMaxTries() - 1); }
+void Logic::setCurretyTryHiddenWordCheat() { m_currentTry = (getMaxTries() - 1); }
 
 // Public Methods
 
@@ -136,7 +136,7 @@ std::string getRandomWord()
 
 	std::random_device rd;
 	std::mt19937 mt(rd());
-	std::uniform_int_distribution<int> dist(1, 21);
+	std::uniform_int_distribution<int> dist(1, 31);
 	int randomNumber = dist(mt);
 
 	std::ifstream file("res/words/words.txt");
